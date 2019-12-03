@@ -45,12 +45,11 @@ public class SendDemandeAValider implements SendDemandeAValiderLocal {
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")
     @Override
-    public void sendDemande(DemandeExport demande, String niveau) {
+    public void sendDemande(DemandeExport demande) {
         try {
             JMSProducer producer = context.createProducer();
-
             ObjectMessage mess = context.createObjectMessage();
-            mess.setJMSType(niveau);
+            mess.setJMSType("DemandeExport");
             mess.setObject((Serializable) demande);
             context.createProducer().send(DemandesAValider, mess);
             System.out.println(demande + " envoyée.");

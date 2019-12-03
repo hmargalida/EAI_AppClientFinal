@@ -24,8 +24,7 @@ public class GestionClientFinal implements GestionClientFinalLocal {
     @Override
     public String demanderFormation(long idClient, String nomClient, long idFormation, String intitule, int nbParticipants) {
         DemandeExport demande = new DemandeExport(StatutDemande.En_attente, idFormation, nbParticipants, idClient);
-        String niveau = "";
-        this.sendDemandeAValider.sendDemande(demande, niveau);
+        this.sendDemandeAValider.sendDemande(demande);
         return "La demande a été envoyée !";
     }
   

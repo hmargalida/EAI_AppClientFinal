@@ -5,6 +5,7 @@
  */
 package fr.tlse.miage.appclientfinal.jms;
 
+import fr.tlse.miage.appclientfinal.exports.DemandeExport;
 import javax.ejb.Local;
 
 /**
@@ -14,6 +15,6 @@ import javax.ejb.Local;
 @Local
 public interface SendDemandeValideeLocal {
 
-    void sendDemande(String demande, String niveau);
+    void sendDemande(DemandeExport demande);
     
 }

@@ -5,6 +5,9 @@
  */
 package fr.tlse.miage.appclientfinal.jms;
 
+import com.google.gson.Gson;
+import fr.tlse.miage.appclientfinal.enumerations.StatutDemande;
+import fr.tlse.miage.appclientfinal.exports.DemandeExport;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.ActivationConfigProperty;
@@ -28,9 +31,11 @@ public class ReceiveDemandeValidee implements MessageListener {
 
     @EJB
     private SendDemandeValideeLocal sendDemandeValidee;
+    
+    private Gson gson;
 
     public ReceiveDemandeValidee() {
-        //this.gson = new Gson();
+        this.gson = new Gson();
     }
 
     // Add business logic below. (Right-click in editor and choose
@@ -40,15 +45,12 @@ public class ReceiveDemandeValidee implements MessageListener {
         if (message instanceof TextMessage) {
             try {
                 String json = ((TextMessage) message).getText();
-                String msg = json;
-                
-                if (msg.contains("REFUSEE")) {
-                    System.out.println("Received: " + json);
+                DemandeExport demande = this.gson.fromJson(json, DemandeExport.class);
+                if (demande.getStatut() == StatutDemande.Refusee) {
+                    System.out.println("Received: " + demande);
                 } else {
-                    String niveau = "";
-                    this.sendDemandeValidee.sendDemande(msg, niveau);
+                    this.sendDemandeValidee.sendDemande(demande);
                 }
-
             } catch (JMSException ex) {
                 Logger.getLogger(ReceiveDemandeValidee.class.getName()).log(Level.SEVERE, null, ex);
             }

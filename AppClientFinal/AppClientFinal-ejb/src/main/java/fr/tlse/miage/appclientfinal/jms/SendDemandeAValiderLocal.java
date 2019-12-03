@@ -15,6 +15,6 @@ import javax.ejb.Local;
 @Local
 public interface SendDemandeAValiderLocal {
 
-    void sendDemande(DemandeExport demande, String niveau);
+    void sendDemande(DemandeExport demande);
     
 }

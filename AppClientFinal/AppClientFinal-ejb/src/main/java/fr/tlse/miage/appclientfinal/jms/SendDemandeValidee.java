@@ -5,6 +5,8 @@
  */
 package fr.tlse.miage.appclientfinal.jms;
 
+import fr.tlse.miage.appclientfinal.exports.DemandeExport;
+import java.io.Serializable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.Resource;
@@ -41,16 +43,14 @@ public class SendDemandeValidee implements SendDemandeValideeLocal {
     }
 
     @Override
-    public void sendDemande(String demande, String niveau) {
+    public void sendDemande(DemandeExport demande) {
         try {
             JMSProducer producer = context.createProducer();
-
             ObjectMessage mess = context.createObjectMessage();
-            mess.setJMSType(niveau);
-            mess.setObject(demande);
+            mess.setJMSType("DemandeExport");
+            mess.setObject((Serializable) demande);
             context.createProducer().send(DemandeValidee, mess);
             System.out.println(demande + " envoyée.");
-
         } catch (JMSException ex) {
             Logger.getLogger(SendDemandeAValider.class.getName()).log(Level.SEVERE, null, ex);
         }
