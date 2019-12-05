@@ -5,8 +5,8 @@
  */
 package fr.tlse.miage.appclientfinal.jms;
 
+import com.google.gson.Gson;
 import fr.tlse.miage.appclientfinal.exports.DemandeExport;
-import java.io.Serializable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.Resource;
@@ -16,7 +16,7 @@ import javax.jms.JMSConnectionFactory;
 import javax.jms.JMSContext;
 import javax.jms.JMSException;
 import javax.jms.JMSProducer;
-import javax.jms.ObjectMessage;
+import javax.jms.TextMessage;
 import javax.jms.Topic;
 
 /**
@@ -38,17 +38,19 @@ public class SendDemandeValidee implements SendDemandeValideeLocal {
     @JMSConnectionFactory("ConnectionFactory")
     private JMSContext context;
 
+    private Gson gson;
+    
     public SendDemandeValidee() {
-
+        this.gson = new Gson();
     }
 
     @Override
     public void sendDemande(DemandeExport demande) {
         try {
             JMSProducer producer = context.createProducer();
-            ObjectMessage mess = context.createObjectMessage();
+            TextMessage mess = context.createTextMessage();
+            mess.setText(this.gson.toJson(demande));
             mess.setJMSType("DemandeExport");
-            mess.setObject((Serializable) demande);
             context.createProducer().send(DemandeValidee, mess);
             System.out.println(demande + " envoyée.");
         } catch (JMSException ex) {

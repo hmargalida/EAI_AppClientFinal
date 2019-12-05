@@ -23,18 +23,18 @@ import javax.jms.TextMessage;
  * @author SALLABERRYMarion
  */
 @MessageDriven(activationConfig = {
-    @ActivationConfigProperty(propertyName = "destinationLookup", propertyValue = "DemandeValidee")
+    @ActivationConfigProperty(propertyName = "destinationLookup", propertyValue = "DemandeAcceptee")
     ,
         @ActivationConfigProperty(propertyName = "destinationType", propertyValue = "javax.jms.Topic")
 })
-public class ReceiveDemandeValidee implements MessageListener {
+public class ReceiveDemandeAcceptee implements MessageListener {
 
     @EJB
     private SendDemandeValideeLocal sendDemandeValidee;
     
     private Gson gson;
 
-    public ReceiveDemandeValidee() {
+    public ReceiveDemandeAcceptee() {
         this.gson = new Gson();
     }
 
@@ -47,12 +47,13 @@ public class ReceiveDemandeValidee implements MessageListener {
                 String json = ((TextMessage) message).getText();
                 DemandeExport demande = this.gson.fromJson(json, DemandeExport.class);
                 if (demande.getStatut() == StatutDemande.Refusee) {
-                    System.out.println("Received: " + demande);
+                    System.out.println("Received: " + demande + "- demande refusée");
                 } else {
+                    System.out.println("Received: " + demande + "- demande acceptée");
                     this.sendDemandeValidee.sendDemande(demande);
                 }
             } catch (JMSException ex) {
-                Logger.getLogger(ReceiveDemandeValidee.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(ReceiveDemandeAcceptee.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else if (message != null) {
             System.out.println("Echec de réception du message");

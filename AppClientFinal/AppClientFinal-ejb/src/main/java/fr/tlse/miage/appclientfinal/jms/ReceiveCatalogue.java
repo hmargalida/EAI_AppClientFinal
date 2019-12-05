@@ -6,9 +6,7 @@
 package fr.tlse.miage.appclientfinal.jms;
 
 import com.google.gson.Gson;
-import fr.tlse.miage.appclientfinal.enumerations.StatutDemande;
 import fr.tlse.miage.appclientfinal.exports.CatalogueExport;
-import fr.tlse.miage.appclientfinal.exports.DemandeExport;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.ActivationConfigProperty;
@@ -42,7 +40,7 @@ public class ReceiveCatalogue implements MessageListener {
                 CatalogueExport catalogue = this.gson.fromJson(json, CatalogueExport.class);
                 System.out.println("Received: " + catalogue);
             } catch (JMSException ex) {
-                Logger.getLogger(ReceiveDemandeValidee.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(ReceiveDemandeAcceptee.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else if (message != null) {
             System.out.println("Echec de réception du message");

@@ -44,7 +44,11 @@ public class ClientFinalWebService {
      * Retrieves representation of an instance of
      * fr.tlse.miage.appformations.webservice.ClientFinalWebService
      *
-     * @param content
+     * @param idClient
+     * @param idFormation
+     * @param nomClient
+     * @param intitule
+     * @param nbParticipants
      * @return an instance of java.lang.String
      */
     @POST

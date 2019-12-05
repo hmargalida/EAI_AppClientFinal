@@ -5,6 +5,7 @@
  */
 package fr.tlse.miage.appclientfinal.jms;
 
+import com.google.gson.Gson;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.Resource;
@@ -18,6 +19,7 @@ import javax.jms.ObjectMessage;
 import javax.jms.Queue;
 import fr.tlse.miage.appclientfinal.exports.DemandeExport;
 import java.io.Serializable;
+import javax.jms.TextMessage;
 
 /**
  *
@@ -37,9 +39,11 @@ public class SendDemandeAValider implements SendDemandeAValiderLocal {
     @Inject
     @JMSConnectionFactory("ConnectionFactory")
     private JMSContext context;
+    
+    private Gson gson;
 
     public SendDemandeAValider() {
-
+        this.gson = new Gson();
     }
 
     // Add business logic below. (Right-click in editor and choose
@@ -48,9 +52,9 @@ public class SendDemandeAValider implements SendDemandeAValiderLocal {
     public void sendDemande(DemandeExport demande) {
         try {
             JMSProducer producer = context.createProducer();
-            ObjectMessage mess = context.createObjectMessage();
+            TextMessage mess = context.createTextMessage();
+            mess.setText(this.gson.toJson(demande));
             mess.setJMSType("DemandeExport");
-            mess.setObject((Serializable) demande);
             context.createProducer().send(DemandesAValider, mess);
             System.out.println(demande + " envoyée.");
 

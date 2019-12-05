@@ -14,20 +14,20 @@ import java.io.Serializable;
  */
 public class DemandeExport implements Serializable{
 
-    private Long idDemande;
+    private long idDemande;
     private StatutDemande statut;
-    private Long idFormation;
+    private long idFormation;
     private int nbParticipants;
-    private Long idClient;
+    private long idClient;
 
-    public DemandeExport(StatutDemande statut, Long idFormation, int nbParticipants, Long idClient) {
+    public DemandeExport(StatutDemande statut, long idFormation, int nbParticipants, long idClient) {
         this.statut = statut;
         this.idFormation = idFormation;
         this.nbParticipants = nbParticipants;
         this.idClient = idClient;
     }
 
-    public DemandeExport(Long idDemande, StatutDemande statut, Long idFormation, int nbParticipants, Long idClient) {
+    public DemandeExport(long idDemande, StatutDemande statut, long idFormation, int nbParticipants, long idClient) {
         this.idDemande = idDemande;
         this.statut = statut;
         this.idFormation = idFormation;
@@ -35,11 +35,11 @@ public class DemandeExport implements Serializable{
         this.idClient = idClient;
     }
 
-    public Long getIdDemande() {
+    public long getIdDemande() {
         return idDemande;
     }
 
-    public void setIdDemande(Long idDemande) {
+    public void setIdDemande(long idDemande) {
         this.idDemande = idDemande;
     }
 
@@ -51,11 +51,11 @@ public class DemandeExport implements Serializable{
         this.statut = statut;
     }
 
-    public Long getIdFormation() {
+    public long getIdFormation() {
         return idFormation;
     }
 
-    public void setIdFormation(Long idFormation) {
+    public void setIdFormation(long idFormation) {
         this.idFormation = idFormation;
     }
 
@@ -67,11 +67,11 @@ public class DemandeExport implements Serializable{
         this.nbParticipants = nbParticipants;
     }
 
-    public Long getIdClient() {
+    public long getIdClient() {
         return idClient;
     }
 
-    public void setIdClient(Long idClient) {
+    public void setIdClient(long idClient) {
         this.idClient = idClient;
     }
 }
