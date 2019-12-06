@@ -15,6 +15,11 @@ import javax.ejb.Local;
 @Local
 public interface SendDemandeAValiderLocal {
 
+    /**
+     * Envoi de messages dans la queue DemandesAValider
+     *
+     * @param demande - demande à envoyer
+     */
     void sendDemande(DemandeExport demande);
-    
+
 }

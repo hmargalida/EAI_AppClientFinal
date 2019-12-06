@@ -26,17 +26,23 @@ import javax.jms.TextMessage;
         @ActivationConfigProperty(propertyName = "destinationType", propertyValue = "javax.jms.Topic")
 })
 public class ReceiveCatalogue implements MessageListener {
-    private Gson gson;
+    private Gson gson;  //Objet permettant d'effectuer des conversions depuis/vers du json
     
     public ReceiveCatalogue(){
         this.gson = new Gson();
     }
 
+    /**
+     * Réception des messages contenus dans le topic Catalogue
+     * @param message - message reçu
+     */
     @Override
     public void onMessage(Message message) {
         if (message instanceof TextMessage) {
             try {
+                //Récupération du contenu du message
                 String json = ((TextMessage) message).getText();
+                //Conversion du message en objet CatalogueExport
                 CatalogueExport catalogue = this.gson.fromJson(json, CatalogueExport.class);
                 System.out.println("Received: " + catalogue);
             } catch (JMSException ex) {
@@ -46,7 +52,4 @@ public class ReceiveCatalogue implements MessageListener {
             System.out.println("Echec de réception du message");
         }
     }
-
-    // Add business logic below. (Right-click in editor and choose
-    // "Insert Code > Add Business Method")
 }

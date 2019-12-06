@@ -32,24 +32,30 @@ public class ReceiveDemandeAcceptee implements MessageListener {
     @EJB
     private SendDemandeValideeLocal sendDemandeValidee;
     
-    private Gson gson;
+    private Gson gson;      //Objet permettant d'effectuer des conversions depuis/vers du json
 
     public ReceiveDemandeAcceptee() {
         this.gson = new Gson();
     }
 
-    // Add business logic below. (Right-click in editor and choose
-    // "Insert Code > Add Business Method")
+    /**
+     * Réception des messages contenus dans le topic DemandeAcceptee
+     * @param message - message reçu
+     */
     @Override
     public void onMessage(Message message) {
         if (message instanceof TextMessage) {
             try {
+                //Récupération du contenu du message
                 String json = ((TextMessage) message).getText();
+                //Conversion du message en objet DemandeExport
                 DemandeExport demande = this.gson.fromJson(json, DemandeExport.class);
+                //Vérification du statut de la demande
                 if (demande.getStatut() == StatutDemande.Refusee) {
                     System.out.println("Received: " + demande + "- demande refusée");
                 } else {
                     System.out.println("Received: " + demande + "- demande acceptée");
+                    //Renvoi de la demande à l'AppCommerciale
                     this.sendDemandeValidee.sendDemande(demande);
                 }
             } catch (JMSException ex) {

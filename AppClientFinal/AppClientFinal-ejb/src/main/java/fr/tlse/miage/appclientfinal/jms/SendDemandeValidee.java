@@ -27,34 +27,41 @@ import javax.jms.Topic;
 public class SendDemandeValidee implements SendDemandeValideeLocal {
 
     /**
-     * Nom du Topic recherché.
+     * Nom du Topic
      */
     @Resource(mappedName = "DemandeValidee")
     private Topic DemandeValidee;
     /**
-     * contexte JMS. Injection auto par serveur d'appli.
+     * contexte JMS
      */
     @Inject
     @JMSConnectionFactory("ConnectionFactory")
     private JMSContext context;
 
-    private Gson gson;
-    
+    private Gson gson;      //Objet permettant d'effectuer des conversions depuis/vers du json
+
     public SendDemandeValidee() {
         this.gson = new Gson();
     }
 
+    /**
+     * Envoi de messages dans la queue DemandesAValider
+     *
+     * @param demande - demande à envoyer
+     */
     @Override
     public void sendDemande(DemandeExport demande) {
         try {
             JMSProducer producer = context.createProducer();
             TextMessage mess = context.createTextMessage();
+            //Conversion de l'objet demande en json
             mess.setText(this.gson.toJson(demande));
             mess.setJMSType("DemandeExport");
+            //Envoi du message
             context.createProducer().send(DemandeValidee, mess);
             System.out.println(demande + " envoyée.");
         } catch (JMSException ex) {
-            Logger.getLogger(SendDemandeAValider.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SendDemandeValidee.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

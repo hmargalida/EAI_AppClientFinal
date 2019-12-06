@@ -11,12 +11,18 @@ import java.io.Serializable;
  *
  * @author SALLABERRYMarion
  */
-public class FormationExport implements Serializable{
-    private Long idFormation;
-    private String intitule;
-    private String description;
+public class FormationExport implements Serializable {
+
+    /**
+     * Classe permettant de recuperer les informations d'une formation d'une autre
+     * application
+     */
     
-    public FormationExport(Long idFormation, String intitule, String description){
+    private Long idFormation;       //identifiant de la formation
+    private String intitule;        //intitule de la formation
+    private String description;     //description de la formation
+
+    public FormationExport(Long idFormation, String intitule, String description) {
         this.idFormation = idFormation;
         this.intitule = intitule;
         this.description = description;
@@ -45,6 +51,5 @@ public class FormationExport implements Serializable{
     public void setDescription(String description) {
         this.description = description;
     }
-    
-    
+
 }

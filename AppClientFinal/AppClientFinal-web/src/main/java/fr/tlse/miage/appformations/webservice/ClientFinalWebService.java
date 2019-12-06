@@ -41,15 +41,14 @@ public class ClientFinalWebService {
     }
 
     /**
-     * Retrieves representation of an instance of
-     * fr.tlse.miage.appformations.webservice.ClientFinalWebService
+     * Envoi une demande réalisée par une entreprise (client)
      *
-     * @param idClient
-     * @param idFormation
-     * @param nomClient
-     * @param intitule
-     * @param nbParticipants
-     * @return an instance of java.lang.String
+     * @param idClient - identifiant du client
+     * @param idFormation - identifiant de la formation
+     * @param nomClient - nom du client
+     * @param intitule - intitule de la formation
+     * @param nbParticipants - nombre de participants
+     * @return - message de confirmation d'envoi de la demande
      */
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
@@ -63,6 +62,10 @@ public class ClientFinalWebService {
         }
     }
 
+    /**
+     * Initialise la variable gestionClientFinal
+     * @return - instance de la classe GestionClientFinalLocal
+     */
     private GestionClientFinalLocal lookupGestionClientFinalLocal() {
         try {
             javax.naming.Context c = new InitialContext();

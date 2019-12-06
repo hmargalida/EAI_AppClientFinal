@@ -13,12 +13,15 @@ import java.io.Serializable;
  * @author SALLABERRYMarion
  */
 public class DemandeExport implements Serializable{
-
-    private long idDemande;
-    private StatutDemande statut;
-    private long idFormation;
-    private int nbParticipants;
-    private long idClient;
+    /**
+     * Classe permettant d'envoyer les informations d'une demande à une autre application
+     */
+    
+    private long idDemande;         //identifiant de la demande
+    private StatutDemande statut;   //statut de la demande
+    private long idFormation;       //identifiant de la formation
+    private int nbParticipants;     //nombre de participants
+    private long idClient;          //identifiant du client
 
     public DemandeExport(StatutDemande statut, long idFormation, int nbParticipants, long idClient) {
         this.statut = statut;
